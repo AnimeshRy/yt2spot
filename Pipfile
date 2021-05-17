@@ -11,6 +11,7 @@ youtube-title-parse = "*"
 
 [dev-packages]
 python-dotenv = "*"
+prettytable = "*"
 
 [requires]
 python_version = "3.8"

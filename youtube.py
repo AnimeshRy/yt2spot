@@ -3,7 +3,7 @@ from googleapiclient.discovery import build
 from dataclasses import dataclass
 from dotenv import load_dotenv
 import os
-
+import prettytable
 load_dotenv()
 
 
@@ -34,12 +34,29 @@ class Youtube:
         for item in result['items']:
             songInfo = item['snippet']['title']
             try:
-                artist, title = get_artist_title[songInfo]
+                artist, title = get_artist_title(songInfo)
                 self.songs.append(Song(artist, title))
             except:
                 print(f'Error parsing {songInfo}')
 
         return result
 
+    def get_songs_from_playlist(self, playList_id):
+        result = self.__fetch_songs(playList_id)
+        while 'nextPageToken' in result:
+            page_token = result['nextPageToken']
+            result = self.__fetch_songs(playList_id, page_token)
+        self.printer()
 
-def get_songs(self, playList_id)
+    def printer(self):
+        t = prettytable.PrettyTable()
+        t.field_names = ['Artist', '']
+        for s in self.songs:
+            t.add_row([s.artist, s.title])
+        print(t)
+
+
+if __name__ == "__main__":
+    yt = Youtube()
+    yt.get_songs_from_playlist(
+        'PLMC9KNkIncKtPzgY-5rmhvj7fax8fdxoj')
