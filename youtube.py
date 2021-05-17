@@ -50,7 +50,7 @@ class Youtube:
 
     def printer(self):
         t = prettytable.PrettyTable()
-        t.field_names = ['Artist', '']
+        t.field_names = ['Artist', 'Song']
         for s in self.songs:
             t.add_row([s.artist, s.title])
         print(t)
