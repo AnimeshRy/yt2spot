@@ -34,7 +34,7 @@ class Spotify:
 
         playlist = self.sp.user_playlist_create(user=os.getenv(
             'SPOTIFY_USER_ID'), name=playlist_name, public=True)
-        return playlist['id']
+        return str(playlist['id'])
 
     def get_song(self, artist: str, song_name: str) -> str:
         # retrieve Song URI
@@ -48,27 +48,31 @@ class Spotify:
 
         items = results["tracks"]["items"]
         if not items:
-            print(f"Couldn't retrieve {song_name} by {artist}")
             return None
         else:
             return items[0]["uri"]
 
-    def add_song_to_playlist(self, playlist_id, song_uri):
-        res = self.sp.playlist_add_items(
-            playlist_id=playlist_id, items=song_uri)
-        print(res)
-
-    def num_playlist_songs(self):
+    def add_song_to_playlist(self, playlist_id: str, song_uri: str) -> bool:
+        # add song to playlist based on URI provided
         try:
-            res = self.sp.playlist_tracks('1g2GKGQ2qvFJNJquerl3kr')
+            res = self.sp.playlist_add_items(
+                playlist_id=playlist_id, items=[song_uri])
+            return True
+        except:
+            return False
+
+    def num_playlist_songs(self, playlist_id: str) -> int:
+        try:
+            res = self.sp.playlist_tracks(playlist_id)
         except:
             return None
-        return res['total']
+        return int(res['total'])
 
 
-s = Spotify()
-# p_id = s.create_playlist('Test-Playlist')
-# print(p_id)
-# s_uri = s.get_song('SEBASTIAN PAUL', 'TROJAN HORSE')
-# s.add_song_to_playlist('1g2GKGQ2qvFJNJquerl3kr', [s_uri])
-s.num_playlist_songs()
+if __name__ == "__main__":
+    s = Spotify()
+    p_id = s.create_playlist('Test-Playlist')
+    print(p_id)
+    s_uri = s.get_song('Justin Bieber', 'Peaches ft. Daniel Caesar, Giveon')
+    print(s.add_song_to_playlist(p_id, [s_uri]))
+    print(s.num_playlist_songs(p_id))

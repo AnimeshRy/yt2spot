@@ -3,3 +3,4 @@
 test.json
 .env
 .cache*
+__pycache__

@@ -46,7 +46,7 @@ class Youtube:
         while 'nextPageToken' in result:
             page_token = result['nextPageToken']
             result = self.__fetch_songs(playList_id, page_token)
-        self.printer()
+        return self.songs
 
     def printer(self):
         t = prettytable.PrettyTable()
@@ -58,5 +58,5 @@ class Youtube:
 
 if __name__ == "__main__":
     yt = Youtube()
-    yt.get_songs_from_playlist(
-        'PLMC9KNkIncKtPzgY-5rmhvj7fax8fdxoj')
+    print(yt.get_songs_from_playlist(
+        'PLc2sKlfFc01pesmB9YIp_THyWcq2rZxFc'))
