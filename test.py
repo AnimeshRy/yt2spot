@@ -1,24 +1,43 @@
-# from youtube_title_parse import get_artist_title
-# from googleapiclient.discovery import build
-# import json
+import os
+import spotipy
+import dotenv
+dotenv.load_dotenv()
 
-# api_service_name = "youtube"
-# api_version = "v3"
 
-# youtube = build(
-#     api_service_name, api_version, developerKey=DEVELOPER_KEY)
+class SpotifyClientManager:
+    def __init__(self) -> None:
+        self.scope = 'playlist-modify-private'
+        self.user_id = os.getenv('SPOTIFY_USER_ID')
+        self.client_id = os.getenv('SPOTIFY_CLIENT_ID')
+        self.client_secret = os.getenv('SPOTIFY_CLIENT_SECRET')
+        self.redirect_uri = os.getenv('SPOTIFY_REDIRECT_URI')
 
-# request = youtube.playlistItems().list(
-#     part="snippet",
-#     maxResults=300,
-#     playlistId="PLc2sKlfFc01q2vgCacU2a2OI3QBIaltcN",
-#     pageToken=None
-# )
-# response = request.execute()
-from collections import namedtuple
+    def get_access_token(self):
+        # Spotify Access Token
+        return spotipy.util.prompt_for_user_token(
+            username=self.user_id,
+            scope=self.scope,
+            client_id=self.client_id,
+            client_secret=self.client_secret,
+            redirect_uri=self.redirect_uri
+        )
 
-ab = 23
-rank = 'dnsjd'
 
-Point = namedtuple('Point', ['x', 'y'])
-print(Point)
+class Spotify:
+    def __init__(self) -> None:
+        self.spotify = SpotifyClientManager()
+
+    def create_playlist(self, playlist_name: str) -> str:
+        # request_body = {
+        #     'name': playlist_name,
+        #     'description': 'youtube playlist',
+        #     'public': False
+        # }
+
+        # query = f"https://api.spotify.com/v1/users/{self.spotify.user_id}/playlists"
+        sp = spotipy.Spotify(auth_manager=self.spotify)
+        print(sp.current_user_recently_played())
+
+
+s = Spotify()
+s.create_playlist('sdds')
