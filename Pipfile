@@ -7,9 +7,9 @@ name = "pypi"
 google-api-python-client = "==1.12.8"
 spotipy = "==2.16.1"
 youtube-title-parse = "*"
+python-dotenv = "*"
 
 [dev-packages]
-python-dotenv = "*"
 
 [requires]
 python_version = "3.8"
