@@ -60,6 +60,10 @@ Name Spotify Playlist:
 ...
 ```
 
+[MIT LICENSE](./LICENSE)
+
+#### Built with 💙 by [Animesh Singh](https://www.github.com/AnimeshRy)
+
 
 
 
