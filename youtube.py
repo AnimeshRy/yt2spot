@@ -3,6 +3,7 @@ from googleapiclient.discovery import build
 from dataclasses import dataclass
 from dotenv import load_dotenv
 import os
+import re
 load_dotenv()
 
 
@@ -10,6 +11,26 @@ load_dotenv()
 class Song:
     artist: str
     title: str
+
+
+def clean_song_info(song: Song) -> Song:
+    artist, title = song.artist, song.title
+    # Remove everything after '(' including '('
+    title = re.sub('\(.*', '', title)
+    # Remove everything after 'ft' including 'ft'
+    title = re.sub('ft.*', '', title)
+    # Remove everything after ',' including ','
+    title = re.sub(',.*', '', title)
+    # Remove everything after ' x ' including ' x '
+    artist = re.sub('\sx\s.*', '', artist)
+    # Remove everything after '(' including '('
+    artist = re.sub('\(.*', '', artist)
+    # Remove everything after 'ft' including 'ft'
+    artist = re.sub('ft.*', '', artist)
+    # Remove everything after ',' including ','
+    artist = re.sub(',.*', '', artist)
+    # Remove whitespaces from start and end
+    return Song(artist.strip(), title.strip())
 
 
 class Youtube:
@@ -34,7 +55,7 @@ class Youtube:
             songInfo = item['snippet']['title']
             try:
                 artist, title = get_artist_title(songInfo)
-                self.songs.append(Song(artist, title))
+                self.songs.append(clean_song_info(Song(artist, title)))
             except:
                 print(f'Error parsing {songInfo}')
 
