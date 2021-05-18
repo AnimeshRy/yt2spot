@@ -60,6 +60,10 @@ Name Spotify Playlist:
 ...
 ```
 
+### Thanks
+- [Spotipy](https://github.com/plamere/spotipy)
+- [Youtube Title Parse](https://github.com/lttkgp/youtube_title_parse)
+
 [MIT LICENSE](./LICENSE)
 
 #### Built with 💙 by [Animesh Singh](https://www.github.com/AnimeshRy)
