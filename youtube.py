@@ -3,7 +3,6 @@ from googleapiclient.discovery import build
 from dataclasses import dataclass
 from dotenv import load_dotenv
 import os
-import prettytable
 load_dotenv()
 
 
@@ -47,13 +46,6 @@ class Youtube:
             page_token = result['nextPageToken']
             result = self.__fetch_songs(playList_id, page_token)
         return self.songs
-
-    def printer(self):
-        t = prettytable.PrettyTable()
-        t.field_names = ['Artist', 'Song']
-        for s in self.songs:
-            t.add_row([s.artist, s.title])
-        print(t)
 
 
 if __name__ == "__main__":

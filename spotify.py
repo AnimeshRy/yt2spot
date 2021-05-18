@@ -1,7 +1,6 @@
 import os
 import spotipy
 import dotenv
-import requests
 dotenv.load_dotenv()
 
 

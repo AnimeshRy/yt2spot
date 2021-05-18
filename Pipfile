@@ -5,13 +5,11 @@ name = "pypi"
 
 [packages]
 google-api-python-client = "==1.12.8"
-requests = "*"
 spotipy = "==2.16.1"
 youtube-title-parse = "*"
 
 [dev-packages]
 python-dotenv = "*"
-prettytable = "*"
 
 [requires]
 python_version = "3.8"
